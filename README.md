@@ -11,6 +11,7 @@ There will be a YouTube video covering this soon.
 
 # Download the script
 You can download the script here: https://github.com/Lyceris-chan/GenshinImpact/archive/master.zip
+
 Please put the downloaded file(genshinimpact.bat) on your desktop since spaces contained in the dir to the script may cause the script to not run at all
 
 # Errors / Issues
