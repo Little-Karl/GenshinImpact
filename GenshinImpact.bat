@@ -1,7 +1,7 @@
 REM echo on for debugging
 @ECHO OFF
 REM Set the title of the command prompt
-TITLE GenshinImpact Resolution launcher script
+TITLE GenshinImpact launcher script
 REM Clear the screen of previous commands
 CLS
 goto BatchGotAdmin
@@ -37,7 +37,7 @@ if '%errorlevel%' NEQ '0' (
 	ECHO This scrpt needs administrative permission to set the task priority for genshinimpact.exe
 	ECHO which for lower end hard where will give a performance boost, and pervent lagging.
 	ECHO.
-	ECHO To ignor this error Input X (priority for genshinimpact.exe will not be set)
+	ECHO To ignore this error Input X (priority for genshinimpact.exe will not be set)
 	ECHO To grent permission Input Y, but if denaied the script will exit
 	SET /p i=Input: 
 	if /i "%i%"=="x" (
@@ -141,7 +141,7 @@ call :1
 call :2
 call :3
 REM go to the menu when first rnu check is done
-goto :resolution_Selection
+goto resolution_Selection
 
 REM Check if the gameDirectory.txt is present,
 REM If the file is not present prompt the user to enter the location at which the game executable is present
@@ -262,6 +262,27 @@ else (
 
 
 
+
+REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REM
+REM Leave a nice message
+REM
+REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+:Nice_Message
+COLOR 02
+CLS
+REM Leave a nice message for the user
+echo Ad astra abyssoque! traveler.
+echo.
+echo.
+rem Wait for user input
+pause
+exit /b`
+
+
+
+
+
 REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 REM
 REM Checck if ignor Piority is true
@@ -269,12 +290,11 @@ REM
 REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 REM Launch the Game
 :Check_ignPior
-pause
-if %ignorPiority% equ true (
-	goto P
+if "%ignorPiority%"=="true" (
+	goto Launch_Game
 
 )
-if if %ignorPiority% equ false (
+if "%ignorPiority%"=="false" ((
 	goto priority_Promt
 )
 
@@ -288,6 +308,7 @@ REM Prompt for Priortity Set
 REM
 REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 :priority_Promt
+CLS
 ECHO ==================================================
 ECHO Do you want to set the game to run at top priority?
 ECHO.
@@ -299,13 +320,11 @@ ECHO ==================================================
 SET /p i=Input: 
 if /i "%i%"=="y" ( 
 	set "i="
-	goto Launch_Game
-	
+	goto Launch_Game_Pri
 	)
 if /i "%i%"=="n" ( 
 	set "i="
 	goto Launch_Game
-	goto Nice_Message
 	)
 else (
 	set "i="
@@ -318,124 +337,34 @@ else (
 
 REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 REM
-REM Set the priority
-REM
-REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-:Set_Priority
-rem Wait 30 seconds or until a user presses a key
-TIMEOUT /t 30
-REM Set the CPU priority to high
-call "WMIC.exe" process where name="GenshinImpact.exe" CALL setpriority "128"
-goto Nice_Message
-
-
-
-
-
-
-REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-REM
 REM Launch Genshi Impact
 REM
 REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-REM Launch the Game
 
+REM without priority
 :Launch_Game
-rem CLS
-rem Starting game with user define d configurations
-echo Starting the game...
-
-start "" "%gamelocation%"\GenshinImpact.exe -screen-width %screenWidth% -screen-height %screenHeight% %dx11%
-
-pause
-
-
-
-
-
-REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-REM
-REM Leave a nice message
-REM
-REM --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-:Nice_Message
 CLS
-REM Leave a nice message for the user
-echo Ad astra abyssoque! traveler.
-echo.
-echo.
-rem Wait for user input
-pause
-exit /b
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+rem Starting game with user defined configurations
+echo Starting the game...
+start "" "%gamelocation%"\GenshinImpact.exe -screen-width %screenWidth% -screen-height %screenHeight% %dx11%
+CLS
+TIMEOUT 3
+goto Nice_Message
+
+
+REM with priority
+:Launch_Game_Pri
+CLS
+rem Starting game with user defined configurations
+echo Starting the game...
+start "" "%gamelocation%"\GenshinImpact.exe -screen-width %screenWidth% -screen-height %screenHeight% %dx11%
+rem Wait 30 seconds or until a user presses a key
+TIMEOUT /t 30
+REM Set the CPU priority to high
+echo setting priority
+call "WMIC.exe" process where name="GenshinImpact.exe" CALL setpriority "128"
+CLS
+goto Nice_Message
 
 
 
@@ -455,18 +384,18 @@ ECHO ==================================================
 ECHO  Genshin Impact    (width: %screenWidth% - height: %screenHeight%)
 ECHO ==================================================
 ECHO.
-ECHO  S. Set custom resolution
-ECHO  U. Use presets
+ECHO  1. Set custom resolution
+ECHO  2. Use presets
 ECHO.
 ECHO.
 ECHO ==================================================
 ECHO.
 SET /p i=Input: 
-if /i "%i%"=="S" ( 
+if /i "%i%"=="1" ( 
 	SET "i="
 	goto Custom_Resolutions_Menu 
 	)
-if /i "%i%"=="U" ( 
+if /i "%i%"=="2" ( 
 	SET "i=" 
 	goto Preset_Menu_Selections 
 	)
@@ -474,7 +403,6 @@ else (
 	set "i="
 	goto Resolution_Selection
 )
-
 
 
 REM Custom Resolution Menu
@@ -489,7 +417,6 @@ SET /p screenHeight= Set height:
 goto confirmation
 
 
-
 REM Standard / Cinematic Selection
 :Preset_Menu_Selections
 CLS
@@ -497,19 +424,19 @@ ECHO ==================================================
 ECHO  Genshin Impact    (width: %screenWidth% - height: %screenHeight%)
 ECHO ==================================================
 ECHO.
-ECHO  S: Standard Resolutions(16:9)
-ECHO  C: Cinematic(21:9)
+ECHO  1: Standard Resolutions(16:9)
+ECHO  2: Cinematic(21:9)
 ECHO.
 ECHO.
 ECHO  0: to go back
 ECHO ==================================================
 ECHO.
 SET /p i=Input: 
-if /i "%i%"=="S" (
+if /i "%i%"=="1" (
 	SET "i="
 	goto Standard_Resolution_Selection 
 	)
-if /i "%i%"=="C" (
+if /i "%i%"=="2" (
 	SET "i="
 	goto Cinematic_Resolution_Selection
 	)
@@ -519,9 +446,8 @@ if /i "%i%"=="0" (
 	)
 else (
 	set "i="
-	goto Resolution_Selection
+	goto Preset_Menu_Selections
 )
-
 
 
 :Standard_Resolution_Selection
@@ -530,9 +456,9 @@ ECHO ==================================================
 ECHO  Genshin Impact    (width: %screenWidth% - height: %screenHeight%)
 ECHO ==================================================
 ECHO.
-ECHO  S: Small
+ECHO  1: Small
 ECHO     [ 1366 x 768 ] - [ 800  x 600 ]
-ECHO  B: Big
+ECHO  2: Big
 ECHO     [ 7680 x 4320 ] - [ 1600 x 900 ]
 ECHO.
 ECHO.
@@ -540,11 +466,11 @@ ECHO  0: go back
 ECHO ==================================================
 ECHO.
 SET /p i=Input: 
-if /i "%i%"=="S" (
+if /i "%i%"=="1" (
 	SET "i="
 	goto Standard_small_Resolution_Selection
 	)
-if /i "%i%"=="B" (
+if /i "%i%"=="2" (
 	SET "i="
 	goto Standard_BIG_Resolution_Selection
 	)
@@ -556,7 +482,6 @@ else (
 	SET "i="
 	goto Standard_Resolution_Selection
 )
-
 
 
 REM Standard_Small_Resolution_Selection
@@ -627,7 +552,6 @@ if "%i%"=="0" (
 )
 
 
-
 REM Standard_BIG_Resolution_Selection
 :Standard_BIG_Resolution_Selection
 CLS
@@ -638,7 +562,7 @@ ECHO.
 ECHO   1. 7680 x 4320 (16:9) [Don't Ask, some ppl are rich]
 ECHO   2. 5120 x 2880 (16:9)     5. 2560 x 1440 (16:9)
 ECHO   3. 3840 x 2160 (16:9)     6. 1920 x 1080 (16:9)
-ECHO   4. 3200 x 1080 (16:9)     7. 1600 x 900  (16:9)
+ECHO   4. 3200 x 1800 (16:9)     7. 1600 x 900  (16:9)
 ECHO.
 ECHO.
 ECHO   0. Back
@@ -666,7 +590,7 @@ if "%i%"=="3" (
 if "%i%"=="4" (
 	SET "i="
 	SET screenWidth=3200
-	SET screenHeight=1080
+	SET screenHeight=1800
 	goto confirmation
 )
 if "%i%"=="5" (
@@ -696,7 +620,6 @@ if "%i%"=="0" (
 )
 
 
-
 REM Cinematic_Resolution_Selection
 :Cinematic_Resolution_Selection
 CLS
@@ -704,23 +627,23 @@ ECHO ==================================================
 ECHO  Genshin Impact    (width: %screenWidth% - height: %screenHeight%)
 ECHO ==================================================
 ECHO.
-ECHO  S: Small
-ECHO     [ 1366 x 768 ] - [ 800  x 600 ]
-ECHO  B: Big
-ECHO     [ 7680 x 4320 ] - [ 1600 x 900 ]
+ECHO  1: Small
+ECHO     [ 1792 x 768 ] - [ 1400  x 600 ]
+ECHO  2: Big
+ECHO     [ 10080 x 4320 ] - [ 2100 x 900 ]
 ECHO.
 ECHO.
 ECHO  0: go back
 ECHO ==================================================
 ECHO.
 SET /p i=Input: 
-if /i "%i%"=="S" (
+if /i "%i%"=="1" (
 	SET "i="
-	goto Standard_small_Resolution_Selection
+	goto Cinematic_small_Resolution_Selection
 	)
-if /i "%i%"=="B" (
+if /i "%i%"=="2" (
 	SET "i="
-	goto Standard_BIG_Resolution_Selection
+	goto Cinematic_BIG_Resolution_Selection
 	)
 if /i "%i%"=="0" (
 	SET "i="
@@ -728,5 +651,141 @@ if /i "%i%"=="0" (
 	)
 else (
 	SET "i="
-	goto Preset_Menu_Selections
+	goto Cinematic_Resolution_Selection
+)
+
+
+REM Cinematic_small_Resolution_Selection
+:Cinematic_small_Resolution_Selection
+CLS
+ECHO ==================================================
+ECHO  Genshin Impact    (width: %screenWidth% - height: %screenHeight%)
+ECHO ==================================================
+ECHO.
+ECHO   1. 1792  x 768 (21:9)     5. 1400  x 600 (21:9)
+ECHO   2. 1680  x 720 (21:9)     6. 1120  x 480 (21:9)
+ECHO   3. 1344  x 576 (21:9)     7. 1400  x 600 (21:9)
+ECHO   4. 1260  x 540 (21:9)
+ECHO.
+ECHO.
+ECHO   0. go back
+ECHO ==================================================
+ECHO.
+SET /p i=Input: 
+if "%i%"=="1" (
+	SET "i="
+	SET screenWidth=1792
+	SET screenHeight=768
+	goto confirmation
+)
+if "%i%"=="2" (
+	SET "i="
+	SET screenWidth=1680
+	SET screenHeight=720
+	goto confirmation
+)
+if "%i%"=="3" (
+	SET "i="
+	SET screenWidth=1344
+	SET screenHeight=576
+	goto confirmation
+)
+if "%i%"=="4" (
+	SET "i="
+	SET screenWidth=1260
+	SET screenHeight=540
+	goto confirmation
+)
+if "%i%"=="5" (
+	SET "i="
+	SET screenWidth=1400
+	SET screenHeight=600
+	goto confirmation
+)
+if "%i%"=="6" (
+	SET "i="
+	SET screenWidth=1120
+	SET screenHeight=480
+	goto confirmation
+)
+if "%i%"=="7" (
+	SET "i="
+	SET screenWidth=1400
+	SET screenHeight=600
+	goto confirmation
+)
+if "%i%"=="0" (
+	set "i="
+	goto Cinematic_Resolution_Selection
+) else (
+	SET "i="
+	goto Cinematic_Small_Resolution_Selection
+)
+
+
+REM Cinematic_BIG_Resolution_Selection
+:Cinematic_BIG_Resolution_Selection
+CLS
+ECHO ==================================================
+ECHO  Genshin Impact    (width: %screenWidth% - height: %screenHeight%)
+ECHO ==================================================
+ECHO.
+ECHO   1. 10080 x 4320 (21:9) [Idon't think this exist]
+ECHO   2. 6720  x 2880 (21:9)     5. 3360 x 1440 (21:9)
+ECHO   3. 5040  x 2160 (21:9)     6. 2520 x 1080 (21:9)
+ECHO   4. 4200  x 1800 (21:9)     7. 2100 x 900  (21:9)
+ECHO.
+ECHO.
+ECHO   0. Back
+ECHO ==================================================
+ECHO.
+SET /p i=Input: 
+if "%i%"=="1" (
+	SET "i="
+	SET screenWidth=10080
+	SET screenHeight=4320
+	goto confirmation
+)
+if "%i%"=="2" (
+	SET "i="
+	SET screenWidth=6720
+	SET screenHeight=2880
+	goto confirmation
+)
+if "%i%"=="3" (
+	SET "i="
+	SET screenWidth=5040
+	SET screenHeight=2160
+	goto confirmation
+)
+if "%i%"=="4" (
+	SET "i="
+	SET screenWidth=4200
+	SET screenHeight=1080
+	goto confirmation
+)
+if "%i%"=="5" (
+	SET "i="
+	SET screenWidth=3360
+	SET screenHeight=1440
+	goto confirmation
+)
+if "%i%"=="6" (
+	SET "i="
+	SET screenWidth=2520
+	SET screenHeight=1080
+	goto confirmation
+)
+if "%i%"=="7" (
+	SET "i="
+	SET screenWidth=2100
+	SET screenHeight=900
+	goto confirmation
+)
+if "%i%"=="0" (
+	set "i="
+	goto Cinematic_Resolution_Selection
+) else (
+	SET "i="
+	goto Cinematic_BIG_Resolution_Selection
 )
