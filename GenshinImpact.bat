@@ -208,7 +208,7 @@ if "%i%"=="2" (
 ) 
 else (
 	SET "i="
-	goto Resolution_Selection
+	goto confirmation
 )
 
 
@@ -227,7 +227,7 @@ CLS
 ECHO ==================================================
 ECHO Do you want to fource directX 11
 ECHO This is recommended for old hardwere
-ECHO which may not support DirectX 12
+ECHO which may not fully support DirectX 12
 ECHO And may improve perfermance
 ECHO.
 ECHO  Y: yes
@@ -361,7 +361,8 @@ rem Starting game with user defined configurations
 echo Starting the game...
 start "" "%gamelocation%"\GenshinImpact.exe -screen-width %screenWidth% -screen-height %screenHeight% %dx11%
 rem Wait 30 seconds or until a user presses a key
-TIMEOUT /t 30
+REM That is way to close for old system make it 60 just to be safe
+TIMEOUT /t 60
 REM Set the CPU priority to high
 echo setting priority
 call "WMIC.exe" process where name="GenshinImpact.exe" CALL setpriority "128"
