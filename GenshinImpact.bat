@@ -54,7 +54,6 @@ if '%errorlevel%' NEQ '0' (
     SET params= %*
     ECHO UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
     "%temp%\getadmin.vbs"
-    del "%temp%\getadmin.vbs"
     exit /B
 
 :gotAdmin
@@ -275,6 +274,9 @@ REM Leave a nice message for the user
 echo Ad astra abyssoque! traveler.
 echo.
 echo.
+rem fixes for sutpid uac
+rem when this file get deleted cmd also exits which idk why google engineers can figure that out.
+del "%temp%\getadmin.vbs"
 rem Wait for user input
 pause
 exit /b`

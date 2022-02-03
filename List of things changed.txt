@@ -12,3 +12,6 @@ Fixed nothing happens after allowing admin rights if the script is put on a seco
 
 I don't know if it is a brench anymore
 
+
+I spent nearly 12 hours on this, now by back hurts, fuck me I really need to learn to control myself
+
