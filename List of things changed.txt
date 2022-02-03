@@ -1,0 +1,14 @@
+List of things changed
+
+Added 21:9 resolutions
+Added Larger resolutions
+Changed to BatgotAdmin for more stability
+Added option to not run as admin but without set pirority 
+Notifying Users Script need admin privigleges instead of quitting
+Changed the nice message to green
+Added Prompt for weather or not users want to set prirority since there might be more impportant background task
+Re-wrote the entire thing
+Fixed nothing happens after allowing admin rights if the script is put on a second drive(D: / E: / etc..) under folder with spaces.
+
+I don't know if it is a brench anymore
+

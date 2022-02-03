@@ -7,10 +7,6 @@ Ad astra abyssoque! traveler.
 
 # Instructions - Regarding the script - Older drivers
 
-There will be a YouTube video covering this soon.
-
-# Download the script
-You can download the script here: https://github.com/Lyceris-chan/GenshinImpact/archive/master.zip
 
 Please put the downloaded file(genshinimpact.bat) on your desktop since spaces contained in the dir to the script may cause the script to not run at all
 
@@ -28,3 +24,4 @@ In that case, I would like to ask you to join our discord server over at https:/
 - Rob van der Woude for his bat code checker
 - The people over at stackoverflow
 - shirooo39 over at GitHub for his work on the custom resolution part of this script
+- Little-Karl for customizatinon(does that count. I nearly re-wrote the entire thing)
