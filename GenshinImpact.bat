@@ -274,8 +274,9 @@ REM Leave a nice message for the user
 echo Ad astra abyssoque! traveler.
 echo.
 echo.
-rem fixes for sutpid uac
-rem when this file get deleted cmd also exits which idk why google engineers can figure that out.
+REM fixes for sutpid uac
+REM when this file get deleted cmd also exits which idk why google engineers can figure that out.
+REM It only happens in cetern conditiond but it drove my nutes one time so i don't see the reason not to nuck it.
 del "%temp%\getadmin.vbs"
 rem Wait for user input
 pause
